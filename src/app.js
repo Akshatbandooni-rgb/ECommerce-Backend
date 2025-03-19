@@ -22,6 +22,15 @@ app.use(morgan("dev")); // Log HTTP requests in the console
 app.use(express.json()); // Parse JSON payloads
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded payloads
 
+// Ping Route
+app.get("/ping", (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: "Pong!",
+    timestamp: new Date().toISOString(),
+  });
+});
+
 // Connect to the database and start the server
 connectDB()
   .then((connectionInstance) => {
