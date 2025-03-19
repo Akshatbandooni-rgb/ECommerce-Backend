@@ -55,14 +55,4 @@ userSchema.methods.generateAuthToken = function () {
   });
 };
 
-// 🔹 Method to generate a password reset token
-userSchema.methods.getResetPasswordToken = function () {
-  const resetToken = jwt.sign({ id: this._id }, Constants.JWT_SECRET, {
-    expiresIn: "10m",
-  });
-  this.resetPasswordToken = resetToken;
-  this.resetPasswordExpire = Date.now() + 10 * 60 * 1000; // 10 minutes
-  return resetToken;
-};
-
 module.exports = mongoose.model("User", userSchema);
