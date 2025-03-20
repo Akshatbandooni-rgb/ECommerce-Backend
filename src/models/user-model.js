@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Constants = require("../constants/index");
 
 const userSchema = new mongoose.Schema(
   {
@@ -50,8 +49,8 @@ userSchema.methods.comparePassword = async function (enteredPassword) {
 
 // 🔹 Method to generate a JWT token for authentication
 userSchema.methods.generateAuthToken = function () {
-  return jwt.sign({ id: this._id, role: this.role }, Constants.JWT_SECRET, {
-    expiresIn: Constants.JWT_EXPIRE,
+  return jwt.sign({ id: this._id, role: this.role }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRE,
   });
 };
 
