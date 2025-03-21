@@ -1,3 +1,5 @@
+const { StatusCodes, ReasonPhrases } = require("http-status-codes");
+
 class APIError extends Error {
   constructor(message, statusCode) {
     super(message);
@@ -7,34 +9,34 @@ class APIError extends Error {
 
   // 🔹 Generic Errors
   static badRequest(message = "Bad Request") {
-    return new APIError(message, 400);
+    return new APIError(message, StatusCodes.BAD_REQUEST);
   }
 
   static parseError(error) {
-    return new APIError(error.message, 400);
+    return new APIError(error.message, StatusCodes.BAD_REQUEST);
   }
 
   // 🔹 Authentication & Authorization Errors
   static unauthorized(message = "Unauthorized") {
-    return new APIError(message, 401);
+    return new APIError(message, StatusCodes.UNAUTHORIZED);
   }
 
   static forbidden(message = "Forbidden") {
-    return new APIError(message, 403);
+    return new APIError(message, StatusCodes.FORBIDDEN);
   }
 
   // 🔹 Resource Errors
   static notFound(message = "Not Found") {
-    return new APIError(message, 404);
+    return new APIError(message, StatusCodes.NOT_FOUND);
   }
 
   // 🔹 Server & Rate-Limiting Errors
   static internalServerError(message = "Internal Server Error") {
-    return new APIError(message, 500);
+    return new APIError(message, StatusCodes.INTERNAL_SERVER_ERROR);
   }
 
   static tooManyRequests(message = "Too Many Requests") {
-    return new APIError(message, 429);
+    return new APIError(message, StatusCodes.TOO_MANY_REQUESTS);
   }
 
   // 🔹 Convert Error to JSON
