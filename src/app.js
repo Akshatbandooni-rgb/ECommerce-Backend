@@ -5,6 +5,7 @@ const connectDB = require("./config/db");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
+const errorHandler = require("./middlewares/errorHandler");
 
 // Load environment variables
 if (dotenv.config().error) {
@@ -30,6 +31,9 @@ app.get("/ping", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Error Handler
+app.use(errorHandler);
 
 // Connect to the database and start the server
 connectDB()
