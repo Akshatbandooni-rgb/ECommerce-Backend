@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const errorHandler = require("./middlewares/errorHandler");
+const authRouter = require("./routes/v1/auth-routes");
 
 // Load environment variables
 if (dotenv.config().error) {
@@ -32,6 +33,8 @@ app.get("/ping", (req, res) => {
   });
 });
 
+//Routes
+app.use("/api/v1/auth", authRouter);
 // Error Handler
 app.use(errorHandler);
 
