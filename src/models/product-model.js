@@ -32,6 +32,29 @@ const productSchema = new mongoose.Schema(
       min: [0, "Ratings cannot be negative"],
       max: [5, "Ratings cannot exceed 5"],
     },
+    reviews: [
+      {
+        user: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "User",
+          required: true,
+        },
+        name: {
+          type: String,
+          required: true,
+        },
+        rating: {
+          type: Number,
+          required: true,
+          min: [0, "Rating cannot be negative"],
+          max: [5, "Rating cannot exceed 5"],
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
