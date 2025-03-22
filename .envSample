@@ -2,3 +2,4 @@ PORT=3000
 MONGO_URI=mongodb+srv://akshatbandooni333:mzLQPoWUpD4737fQ@nodejs.wuxex.mongodb.net
 JWT_SECRET=your_jwt_secret_key
 JWT_EXPIRE=1d
+NODE_ENV=development
