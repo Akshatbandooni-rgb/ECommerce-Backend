@@ -7,6 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const errorHandler = require("./middlewares/errorHandler");
 const authRouter = require("./routes/v1/auth-routes");
+const userAuth = require("./middlewares/userAuth");
 
 // Load environment variables
 if (dotenv.config().error) {
@@ -25,7 +26,7 @@ app.use(express.json()); // Parse JSON payloads
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded payloads
 
 // Ping Route
-app.get("/ping", (req, res) => {
+app.get("/ping", userAuth, (req, res) => {
   res.status(200).json({
     success: true,
     message: "Pong!",

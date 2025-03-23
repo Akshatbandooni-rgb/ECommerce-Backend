@@ -1,8 +1,12 @@
 const { StatusCodes } = require("http-status-codes");
 const User = require("../models/user-model");
-const validateRegisterUser = require("../validators/registerUser-validation");
+const {
+  validateRegisterUser,
+  validateLoginUser,
+} = require("../validators/authValidation");
 const APIResponse = require("../utils/APIResponse");
 const APIError = require("../utils/APIError");
+const Constants = require("../constants");
 
 const registerUser = async (req, res, next) => {
   try {
@@ -32,4 +36,31 @@ const registerUser = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser };
+const loginUser = async (req, res, next) => {
+  try {
+    validateLoginUser(req.body);
+    const { email, password } = req.body;
+    const existingUser = await User.findOne({ email: email });
+    if (!existingUser) {
+      throw APIError.badRequest("User wih this email does not exist");
+    }
+    const isPasswordValid = await existingUser.comparePassword(password);
+    if (!isPasswordValid) {
+      throw APIError.unauthorized(" Invalid Credentials");
+    }
+    const authToken = existingUser.generateAuthToken();
+    res.cookie(Constants.COKKIE_TOKEN_NAME, authToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+    const successResponse = new APIResponse(
+      `Welcome ${existingUser.firstName} ${existingUser.lastName}`,
+      StatusCodes.OK
+    ).toJSON();
+    return res.status(StatusCodes.OK).json(successResponse);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { registerUser, loginUser };
