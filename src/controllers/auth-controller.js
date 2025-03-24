@@ -63,4 +63,17 @@ const loginUser = async (req, res, next) => {
   }
 };
 
-module.exports = { registerUser, loginUser };
+const logoutUser = async (req, res, next) => {
+  try {
+    res.clearCookie(Constants.COKKIE_TOKEN_NAME);
+    const successResponse = new APIResponse(
+      "User logged out successfully",
+      StatusCodes.OK
+    ).toJSON();
+    return res.status(StatusCodes.OK).json(successResponse);
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { registerUser, loginUser, logoutUser };
