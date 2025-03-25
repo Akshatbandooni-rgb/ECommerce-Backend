@@ -7,6 +7,7 @@ const cors = require("cors");
 const morgan = require("morgan");
 const errorHandler = require("./middlewares/errorHandler");
 const authRouter = require("./routes/v1/auth-routes");
+const profileRouter = require("./routes/v1/profile-routes");
 const userAuth = require("./middlewares/userAuth");
 
 // Load environment variables
@@ -36,6 +37,7 @@ app.get("/ping", userAuth, (req, res) => {
 
 //Routes
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/users", profileRouter);
 // Error Handler
 app.use(errorHandler);
 
