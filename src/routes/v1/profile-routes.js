@@ -8,5 +8,6 @@ const {
 
 router.get("/profile", userAuth, getUserProfile);
 router.put("/profile", userAuth, updateUserProfile);
+router.delete("/profile", userAuth, deleteprofile);
 
 module.exports = router;
