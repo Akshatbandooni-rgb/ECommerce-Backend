@@ -28,7 +28,12 @@ const updateUserProfile = async (req, res, next) => {
   }
 };
 
+const deleteUserProfile = async (req, res, next) => {
+  //TODO: Delete a User's Profile
+};
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
+  deleteUserProfile,
 };
