@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
-const APIResponse = require("../utils/APIResponse");
-const APIError = require("../utils/APIError");
+const APIResponse = require("../utils/apiResponse");
+const APIError = require("../utils/apiError");
 const { validateProfileEditData } = require("../validators/userValidation");
 
 const getUserProfile = async (req, res, next) => {
