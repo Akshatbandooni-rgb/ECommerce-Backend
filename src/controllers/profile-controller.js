@@ -1,5 +1,8 @@
 const { StatusCodes } = require("http-status-codes");
 const APIResponse = require("../utils/APIResponse");
+const APIError = require("../utils/APIError");
+const { validateProfileEditData } = require("../validators/userValidation");
+
 const getUserProfile = async (req, res, next) => {
   try {
     const user = req.user;
@@ -12,17 +15,23 @@ const getUserProfile = async (req, res, next) => {
 
 const updateUserProfile = async (req, res, next) => {
   try {
-    //TODO: Allow user to update only allowed fields
-    const user = req.user;
-    const { firstName, lastName } = req.body;
-    user.firstName = firstName;
-    user.lastName = lastName;
+    const dataToUpdate = req.body;
+    const user = req.loggedInUser;
+
+    if (!validateProfileEditData(dataToUpdate)) {
+      throw new APIError(400, "Invalid fields detected in profile update");
+    }
+
+    Object.assign(user, dataToUpdate);
     await user.save();
+
     const successResponse = new APIResponse(
-      "Profile updated successfully",
-      StatusCodes.OK
+      "✅ User profile updated successfully!",
+      200,
+      { user }
     ).toJSON();
-    return res.status(StatusCodes.OK).json(successResponse);
+
+    res.status(200).json(successResponse);
   } catch (error) {
     next(error);
   }
