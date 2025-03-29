@@ -44,14 +44,14 @@ const deleteUserProfile = async (req, res, next) => {
   try {
     if (!req.loggedInUser) {
       return res
-        .status(404)
+        .status(StatusCodes.NOT_FOUND)
         .json(new APIResponse("❌ User not found!", 404).toJSON());
     }
 
     await req.loggedInUser.deleteOne();
 
     res
-      .status(200)
+      .status(StatusCodes.OK)
       .json(
         new APIResponse("✅ User profile deleted successfully!", 200).toJSON()
       );
