@@ -38,7 +38,23 @@ const updateUserProfile = async (req, res, next) => {
 };
 
 const deleteUserProfile = async (req, res, next) => {
-  //TODO: Delete a User's Profile
+  try {
+    if (!req.loggedInUser) {
+      return res
+        .status(404)
+        .json(new APIResponse("❌ User not found!", 404).toJSON());
+    }
+
+    await req.loggedInUser.deleteOne();
+
+    res
+      .status(200)
+      .json(
+        new APIResponse("✅ User profile deleted successfully!", 200).toJSON()
+      );
+  } catch (error) {
+    next(error);
+  }
 };
 
 module.exports = {
