@@ -19,7 +19,10 @@ const updateUserProfile = async (req, res, next) => {
     const user = req.loggedInUser;
 
     if (!validateProfileEditData(dataToUpdate)) {
-      throw new APIError(400, "Invalid fields detected in profile update");
+      throw new APIError(
+        StatusCodes.BAD_REQUEST,
+        "Invalid fields detected in profile update"
+      );
     }
 
     Object.assign(user, dataToUpdate);
@@ -27,11 +30,11 @@ const updateUserProfile = async (req, res, next) => {
 
     const successResponse = new APIResponse(
       "✅ User profile updated successfully!",
-      200,
+      StatusCodes.OK,
       { user }
     ).toJSON();
 
-    res.status(200).json(successResponse);
+    res.status(StatusCodes.OK).json(successResponse);
   } catch (error) {
     next(error);
   }
