@@ -8,13 +8,8 @@ const {
   deleteUserProfile,
 } = require("../../controllers/profile-controller");
 
-router.get("/profile", userAuth, authorizeRoles(["user"]), getUserProfile);
-router.put("/profile", userAuth, authorizeRoles(["user"]), updateUserProfile);
-router.delete(
-  "/profile",
-  userAuth,
-  authorizeRoles(["user"]),
-  deleteUserProfile
-);
+router.get("/", userAuth, getUserProfile);
+router.put("/", userAuth, updateUserProfile);
+router.delete("/", userAuth, deleteUserProfile);
 
 module.exports = router;

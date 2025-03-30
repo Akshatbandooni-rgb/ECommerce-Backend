@@ -37,7 +37,7 @@ app.get("/ping", userAuth, (req, res) => {
 
 //Routes
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/users", profileRouter);
+app.use("/api/v1/profile", profileRouter);
 // Error Handler
 app.use(errorHandler);
 
