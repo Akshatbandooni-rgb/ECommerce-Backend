@@ -45,7 +45,9 @@ const deleteUserProfile = async (req, res, next) => {
     if (!req.loggedInUser) {
       return res
         .status(StatusCodes.NOT_FOUND)
-        .json(new APIResponse("❌ User not found!", 404).toJSON());
+        .json(
+          new APIResponse("❌ User not found!", StatusCodes.NOT_FOUND).toJSON()
+        );
     }
 
     await req.loggedInUser.deleteOne();
@@ -53,7 +55,10 @@ const deleteUserProfile = async (req, res, next) => {
     res
       .status(StatusCodes.OK)
       .json(
-        new APIResponse("✅ User profile deleted successfully!", 200).toJSON()
+        new APIResponse(
+          "✅ User profile deleted successfully!",
+          StatusCodes.OK
+        ).toJSON()
       );
   } catch (error) {
     next(error);
