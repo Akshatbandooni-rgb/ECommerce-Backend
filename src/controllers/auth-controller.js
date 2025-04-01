@@ -4,8 +4,8 @@ const {
   validateRegisterUser,
   validateLoginUser,
 } = require("../validators/authValidation");
-const APIResponse = require("../utils/APIResponse");
-const APIError = require("../utils/APIError");
+const APIResponse = require("../utils/apiResponse");
+const APIError = require("../utils/apiResponse");
 const Constants = require("../constants");
 
 const registerUser = async (req, res, next) => {
