@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const APIResponse = require("../utils/apiResponse");
-const APIError = require("../utils/apiError");
+const APIError = require("../utils/APIError");
 const { validateProfileEditData } = require("../validators/userValidation");
 const User = require("../models/user-model");
 
@@ -70,8 +70,18 @@ const deleteUserProfile = async (req, res, next) => {
   }
 };
 
+const changePassword = async (req, res, next) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.user._id;
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getUserProfile,
   updateUserProfile,
   deleteUserProfile,
+  changePassword,
 };

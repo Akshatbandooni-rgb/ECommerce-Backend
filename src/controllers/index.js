@@ -4,6 +4,7 @@ const logoutUser = require("./auth-controller").logoutUser;
 const getUserProfile = require("./profile-controller").getUserProfile;
 const updateUserProfile = require("./profile-controller").updateUserProfile;
 const deleteUserProfile = require("./profile-controller").deleteUserProfile;
+const changePassword = require("./profile-controller").changePassword;
 
 module.exports = {
   registerUser,
@@ -11,4 +12,6 @@ module.exports = {
   logoutUser,
   getUserProfile,
   updateUserProfile,
+  deleteUserProfile,
+  changePassword,
 };
