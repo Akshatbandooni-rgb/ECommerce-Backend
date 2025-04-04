@@ -74,6 +74,21 @@ const changePassword = async (req, res, next) => {
   try {
     const { oldPassword, newPassword } = req.body;
     const userId = req.user._id;
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new APIError(StatusCodes.NOT_FOUND, "User not found");
+    }
+    const isMatch = await user.comparePassword(oldPassword);
+    if (!isMatch) {
+      throw new APIError(StatusCodes.UNAUTHORIZED, "Invalid old password");
+    }
+    user.password = newPassword;
+    await user.save();
+    const successResponse = new APIResponse(
+      "Password updated successfully",
+      StatusCodes.OK
+    ).toJSON();
+    res.status(StatusCodes.OK).json(successResponse);
   } catch (error) {
     next(error);
   }
